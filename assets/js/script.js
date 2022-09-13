@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
             else{
                 let gameType = this.getAttribute("data-type");
                 runGame(gameType)
-
             }
         } )
     }
@@ -24,6 +23,10 @@ function runGame(gameType){
 
     if (gameType === "addition"){
         displayAdditionQuestion(num1, num2)
+    }
+    else if (gameType === "multiply"){
+        displayMultiplyQuestion(num1, num2)
+
     }
     else{
         alert(`Unknown Game type ${gameType}`)
@@ -43,9 +46,11 @@ let isCorrect = userAnswer === calculatedAnswer[0];
 
 if (isCorrect){
 alert('Hey, you got it right :D !')
+incrementScore();
 }
 else{
     alert(`Aww.. you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`)
+    incrementWrongAnswer()
 }
 runGame(calculatedAnswer[1])
 };
@@ -57,14 +62,22 @@ function calculateCorrectAnswer(){
     if (operator.innerText == "+"){
         return [operand1 + operand2, 'addition'];
     }
+    else if (operator.innerText == "x"){
+        return [operand1 * operand2, 'multiply'];
+
+    }
     else{
         alert(`Unimplemented operator ${operator}`)
         throw `Unimplemented Operator ${operator}. Aborting! `  }
 };
 function incrementScore(){
+  let oldScore = parseInt(document.getElementById('score').innerText);
+  document.getElementById('score').innerText = ++oldScore;
 
 };
 function incrementWrongAnswer(){
+    let oldScore = parseInt(document.getElementById('incorrect').innerText);
+    document.getElementById('incorrect').innerText = ++oldScore;
 
 };
 function displayAdditionQuestion(operand1, operand2){
@@ -72,10 +85,12 @@ function displayAdditionQuestion(operand1, operand2){
     document.getElementById('operand2').textContent = operand2;
     document.getElementById('operator').textContent = '+';
 };
-function displaySubtractQuestion(){
+function displaySubtractQuestion(operand1, operand2){
 
 };
-function displayMultiplyQuestion(){
-
+function displayMultiplyQuestion(operand1, operand2){
+    document.getElementById('operand1').textContent = operand1;
+    document.getElementById('operand2').textContent = operand2;
+    document.getElementById('operator').textContent = 'x';
 };
 
